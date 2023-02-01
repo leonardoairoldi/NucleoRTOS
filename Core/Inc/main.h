@@ -53,6 +53,9 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+void SetIdleLED(void);
+void SetLoadLED(uint8_t isWorking);
+void SetAliveLED(void);
 
 /* USER CODE END EFP */
 

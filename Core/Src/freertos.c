@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "spi.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -154,7 +154,7 @@ void StartIdleTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-		HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, GPIO_PIN_SET);
+		SetIdleLED();
 		osDelay(1000);
   }
   /* USER CODE END StartIdleTask */
@@ -173,13 +173,13 @@ void StartSendSPITask(void const * argument)
   /* Infinite loop */
 	for(;;)
   {
-		HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
-		for(int i = 0; i < 2000000; i++) {
-			// work
-		}
-		HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_RESET);
-    osDelay(2000);
+		SetLoadLED(1);
+		
+		uint8_t sendData[3] = {0xA, 0xA, 0xA};
+		HAL_SPI_Transmit(&hspi1, sendData, 3, 1000);
+		
+		SetLoadLED(0);
+    osDelay(100);
   }
   /* USER CODE END StartSendSPITask */
 }
@@ -188,7 +188,7 @@ void StartSendSPITask(void const * argument)
 void osTimer2Hz_callback(void const * argument)
 {
   /* USER CODE BEGIN osTimer2Hz_callback */
-	HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+	SetAliveLED();
   /* USER CODE END osTimer2Hz_callback */
 }
 
