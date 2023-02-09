@@ -176,8 +176,11 @@ void StartSendSPITask(void const * argument)
 		SetLoadLED(1);
 		
 		uint8_t sendData[3] = {0xA, 0xA, 0xA};
-		HAL_SPI_Transmit(&hspi1, sendData, 3, 1000);
-		
+		uint8_t receiveData[3];
+		HAL_GPIO_WritePin(SPI1_CS_GPIO_Port, SPI1_CS_Pin, GPIO_PIN_RESET);
+		HAL_SPI_TransmitReceive(&hspi1, sendData, receiveData, 3, 1000);
+		HAL_GPIO_WritePin(SPI1_CS_GPIO_Port, SPI1_CS_Pin, GPIO_PIN_SET);
+				
 		SetLoadLED(0);
     osDelay(100);
   }

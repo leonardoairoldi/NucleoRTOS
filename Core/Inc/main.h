@@ -64,6 +64,8 @@ void SetAliveLED(void);
 #define LED_GREEN_GPIO_Port GPIOB
 #define LED_RED_Pin GPIO_PIN_14
 #define LED_RED_GPIO_Port GPIOB
+#define SPI1_CS_Pin GPIO_PIN_14
+#define SPI1_CS_GPIO_Port GPIOD
 #define LED_BLUE_Pin GPIO_PIN_7
 #define LED_BLUE_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
